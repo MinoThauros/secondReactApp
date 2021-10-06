@@ -10,8 +10,13 @@ const StartGameScreen=(props:any)=>{
                 <Text>Select a number</Text>
                 <TextInput />
                 <View style={styles.buttonStack}>
-                    <Button title="Reset" onPress={()=>{}} />
-                    <Button title="Confirm" onPress={()=>{}} />
+                    <View style={styles.button} >
+                        <Button title="Reset" onPress={()=>{}} color="#c717fc" />
+                    </View>
+                    <View style={styles.button}>
+                        <Button title="Confirm" onPress={()=>{}} color="#f7287b" />
+                    </View>
+                    
                 </View>
             </Card>
                 
@@ -39,6 +44,9 @@ const styles=StyleSheet.create({
     title:{
         fontSize:20,
         marginVertical:10,//replaces marginBottom and marginTop
+    },
+    button:{
+        width:"40%"//ca use either pixel numbers or %
     }
 });
 
