@@ -1,17 +1,70 @@
 import React, {useState} from "react";
-import { View, Text , StyleSheet,TextInput, Button, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { 
+    View,
+    Text ,
+    StyleSheet,
+    Button, 
+    TouchableWithoutFeedback,
+    Keyboard,
+    Alert
+ } from "react-native";
 import Card from '../components/card';
 import Colors from '../constants/colors';
 import Input from "../components/input";
 
 const StartGameScreen=(props:any)=>{
 
-    const [enteredVal, setEnteredVal]=useState(''as String);
+    const [enteredVal, setEnteredVal]=useState('');
+    const [confimed,setConfirmed]=useState(false);
+    const [selectedNumber, setSelectedNumber]=useState({} as Number);
+
     const numberInputHandler=(inputText:String)=>{
         setEnteredVal(inputText.replace(/[^0-9]/g,''));
         //anything that IS NOT 0-9, globally so the enteire text; replace with empty string
         //TouchableWithoutFeedback is used to shut down the keyboard by touching outside of it
     };
+    const resetHandler=()=>{
+        setEnteredVal('');
+        setConfirmed(false);
+    };
+
+    const confirmInputHandler=()=>{
+        const chosenNumber=parseInt(enteredVal);
+        if (isNaN(chosenNumber) || chosenNumber <=0 || chosenNumber >99){
+            Alert.alert('Invalid number',
+            'Number has to be between 0-99',
+            [{
+                text:'Okay',
+                style:'destructive',
+                onPress:resetHandler
+            }]);
+            return;
+        };
+        setConfirmed(true);
+        setSelectedNumber(parseInt(enteredVal));
+        setEnteredVal('');
+
+        
+    };
+    let confirmedOutput:JSX.Element | undefined;
+
+
+    if(confimed){
+        confirmedOutput=
+        <Card>
+            <View>
+                <Text>You selected {selectedNumber}</Text>
+            </View>
+            <View>
+                <Button title="Let's play" onPress={()=>{}} color={Colors.accent} />    
+            </View>
+        </Card>
+
+            
+       
+        
+    };//a change of state will cause a rerender of the whole page, which will trigger the function again
+
 
 
     return(
@@ -32,15 +85,15 @@ const StartGameScreen=(props:any)=>{
                 />
                 <View style={styles.buttonStack}>
                     <View style={styles.button} >
-                        <Button title="Reset" onPress={()=>{}} color={Colors.accent} />
+                        <Button title="Reset" onPress={resetHandler} color={Colors.accent} />
                     </View>
                     <View style={styles.button}>
-                        <Button title="Confirm" onPress={()=>{}} color={Colors.primary} />
+                        <Button title="Confirm" onPress={confirmInputHandler} color={Colors.primary} />
                     </View>
                     
                 </View>
             </Card>
-                
+                {confirmedOutput}
         </View>
         </TouchableWithoutFeedback>
        
