@@ -69,31 +69,31 @@ const StartGameScreen=(props:any)=>{
 
     return(
         <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
-             <View style={styles.screen}>
-            <Text style={styles.title}> Start a new game</Text>
-            <Card style={styles.inputContainer_card}>
-                <Text>Select a number</Text>
-                <Input 
-                    style={styles.input} 
-                    blurOnSubmit  
-                    autoCapitalize='none' 
-                    autoCorrect={false}
-                    keyboardType="number-pad"
-                    maxLength={2}
-                    onChangeText={numberInputHandler}
-                    value={enteredVal}
-                />
-                <View style={styles.buttonStack}>
-                    <View style={styles.button} >
-                        <Button title="Reset" onPress={resetHandler} color={Colors.accent} />
+            <View style={styles.screen}>
+                <Text style={styles.title}> Start a new game</Text>
+                <Card style={styles.inputContainer_card}>
+                    <Text>Select a number</Text>
+                    <Input 
+                        style={styles.input} 
+                        blurOnSubmit  
+                        autoCapitalize='none' 
+                        autoCorrect={false}
+                        keyboardType="number-pad"
+                        maxLength={2}
+                        onChangeText={numberInputHandler}
+                        value={enteredVal}
+                    />
+                    <View style={styles.buttonStack}>
+                        <View style={styles.button} >
+                            <Button title="Reset" onPress={resetHandler} color={Colors.accent} />
+                        </View>
+                        <View style={styles.button}>
+                            <Button title="Confirm" onPress={confirmInputHandler} color={Colors.primary} />
+                        </View>
+                        
                     </View>
-                    <View style={styles.button}>
-                        <Button title="Confirm" onPress={confirmInputHandler} color={Colors.primary} />
-                    </View>
-                    
-                </View>
-            </Card>
-                {confirmedOutput}
+                </Card>
+                    {confirmedOutput}
         </View>
         </TouchableWithoutFeedback>
        
@@ -128,6 +128,9 @@ const styles=StyleSheet.create({
     input:{
         width:50,
         textAlign:'center'
+    },
+    summaryContainer:{
+        marginTop:20
     }
 });
 
