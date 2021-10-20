@@ -42,7 +42,7 @@ const StartGameScreen=(props:any)=>{
             return;
         };
         setConfirmed(true);
-        setSelectedNumber(parseInt(enteredVal));
+        setSelectedNumber(parseInt(enteredVal));//set by the onChange() function on the input
         setEnteredVal('');
         Keyboard.dismiss();
 
@@ -55,13 +55,13 @@ const StartGameScreen=(props:any)=>{
         confirmedOutput=
         <Card styles={styles.numberBox}>
             <View>
-                <Text>You selected</Text>
+                <Text>You selected</Text>  
                 <NumberContainer>
                     {selectedNumber} 
                 </NumberContainer>
             </View>
             <View>
-                <Button title="Let's play" onPress={()=>{}} color={Colors.accent} />    
+                <Button title="Let's play" onPress={()=>props.onStartGame(selectedNumber)} color={Colors.accent} />    
             </View>
         </Card>
 
