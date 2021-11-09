@@ -17,16 +17,24 @@ const generateRandomBetween=(min:number, max:number, exclude:number):number=>{
 
 const GameScreen=(props:any)=>{
     const [currentNumber, setCurrentNumber]=useState(generateRandomBetween(1,100, props.userChoice));
+    const [Rounds, setRounds] = useState(0)
 
     const currentLow=useRef(1);
     const currentHigh=useRef(100);
 
+    const {userChoice, onGameOver}=props;//object destructuring
+//had to destructure the props object because keeping them linked to props changes their value when the parent component changes
+//it will be marked as changed on rerendering of parent component
     useEffect(()=>{
         if (currentNumber===props.userChoice){
-            
-
+            onGameOver(Rounds);//only executed if currentNumber===userChoice
         }
-    })
+    }, [currentNumber, userChoice, onGameOver]);
+    //function will only triggerif render cycle happened AND a change occured on one of the (AFTER render cycle)
+    //-variables in th dependency array
+    
+    
+    
 
     const nextGuessHandler=(direction:string)=>{
         //validate hint given by user before applying it; compare entered value to generated value
@@ -50,6 +58,7 @@ const GameScreen=(props:any)=>{
         }
         const nextNumber= generateRandomBetween(currentLow.current, currentHigh.current, currentNumber);
         setCurrentNumber(nextNumber);//passed as the next currentNumber; button rettigers the nextGuessHandler
+        setRounds(curRounds=>curRounds+1);
     };
 
     return(
