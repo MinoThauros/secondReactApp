@@ -77,7 +77,7 @@ const StartGameScreen=(props:any)=>{
             <View style={styles.screen}>
                 <Text style={styles.title}> Start a new game</Text>
                 <Card style={styles.inputContainer_card}>
-                    <Text>Select a number</Text>
+                    <Text style={styles.text}>Select a number</Text>
                     <Input 
                         style={styles.input} 
                         blurOnSubmit  
@@ -125,6 +125,7 @@ const styles=StyleSheet.create({
     title:{
         fontSize:20,
         marginVertical:10,//replaces marginBottom and marginTop
+        fontFamily:'open-sans-bold'
     },
     button:{
         width:"40%"//ca use either pixel numbers or %
@@ -143,6 +144,9 @@ const styles=StyleSheet.create({
         maxWidth:'50%',
         alignItems:'center'
 
+    },
+    text:{
+        fontFamily:'open-sans',
     }
 });
 
