@@ -41,6 +41,11 @@ export default function App() {
   //well pass the function to the component using props; the function will be triggered from the component
   // this will trigger a state change here; in this case, it will become the chosen number
 
+  //for testing purposes only
+  content=<GameOverScreen roundsNUmber={1} userNumber={3} onRestart={configureNewGameHandler}/>;
+  //for testing purposes only
+
+  
   if (userNumber && GuessRounds<=0){
     content=<GameScreen userChoice={userNumber} onGameOver={gameOverHandler}/>
   }else if (GuessRounds >0){
