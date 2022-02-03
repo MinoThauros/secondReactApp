@@ -11,7 +11,7 @@ const fetchFonts = () => {
   return Font.loadAsync({
     'open-sans':require('./assets/fonts/OpenSans-Regular.ttf'),
     'open-sans-bold':require('./assets/fonts/OpenSans-Bold.ttf')
-  });}//Need to load fonts before render
+  });}//Need to load fonts before render so call on them before anything else
 
 export default function App() {
   const [userNumber, setuserNumber] = useState<any | null>();
