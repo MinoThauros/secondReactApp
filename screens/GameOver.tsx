@@ -9,10 +9,20 @@ const GameOverScreen=(props:any)=>{
             <TitleText>The Game is over</TitleText>
             <View style={styles.imageContainer}>
                 <Image
-                source={require('../assets/success.png')}
-                style={styles.image}
+               //fadeDuration={300}
+               source={require('../assets/success.png')}
+               //source={{uri:'https://cdn.pixabay.com/photo/2016/05/05/23/52/mountain-summit-1375015_960_720.jpg'}}
+               style={styles.image}
                 resizeMode="cover"
-                />{/*fetching image; check docs for*/}
+                />{/*fetching image; check docs for
+                note: 
+                    1-when image is local, React can automatically infer the image's dimensions 
+                    and will use these dimensions by default; hence why the need for width and height
+                    on the image to overwrite it
+                    2-when image is remote, React cannot automatically infer the image's dimensions so
+                    we need to specify the width and height of the image
+                */}
+                
             </View>
             
             
@@ -33,7 +43,7 @@ const styles=StyleSheet.create({
     },
     image:{
         width:'100%', //100% of the parent component
-        height:'100%',
+        height:'100%',//same heigh as width
     },
     imageContainer:{
         borderRadius:200,
