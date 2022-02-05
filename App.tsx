@@ -14,7 +14,7 @@ const fetchFonts = () => {
   });}//Need to load fonts before render so call on them before anything else
 
 export default function App() {
-  const [userNumber, setuserNumber] = useState<any | null>();
+  const [userNumber, setuserNumber] = useState<number | null>();
   const [GuessRounds, setGuessRounds] = useState(0);// if its >0, game is over
   const [dataLoaded, setDataLoaded] = useState(false);
 
@@ -42,7 +42,7 @@ export default function App() {
   // this will trigger a state change here; in this case, it will become the chosen number
 
   //for testing purposes only
-  content=<GameOverScreen roundsNUmber={1} userNumber={3} onRestart={configureNewGameHandler}/>;
+  //content=<GameOverScreen roundsNumber={4} userNumber={4} onRestart={configureNewGameHandler}/>;
   //for testing purposes only
 
   
@@ -58,7 +58,7 @@ export default function App() {
     </View>
   );
 }
-
+//we constantly change the value of content
 const styles = StyleSheet.create({
   screen:{
     flex:1

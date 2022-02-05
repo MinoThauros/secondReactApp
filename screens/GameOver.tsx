@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect}   from "react";
 import { StyleSheet, View,Text,Button, Alert, Image} from "react-native";
 import BodyText from "../components/BodyText";
 import TitleText from "../components/TitleText";
+import colors from "../constants/colors";
 
 const GameOverScreen=(props:any)=>{
     return(
@@ -25,11 +26,24 @@ const GameOverScreen=(props:any)=>{
                 
             </View>
             
-            
-            <BodyText>Number of rounds: {props.roundsNumber}</BodyText>
-            <BodyText>Number was: {props.userNumber}</BodyText>
+            <View style={styles.resultContainer}>
+                <BodyText styles={styles.resultText} >Number of rounds
+                    <Text style={styles.highlight}> {props.roundsNumber} </Text>
+                    to guess the number 
+                    <Text style={styles.highlight}> {props.userNumber}</Text>
+                </BodyText>
+            </View>
+
             <Button title="New Game" onPress={props.onRestart}/>
+            {/**
+             * proprieties aren<t inherited from the parent component using view
+             * view also uses a flexbox position system
+             * It is however the case with <text> and its nested components
+             * <text> also does not behave like a flexbox, it has its own position system where-
+             *  -it wraps itself into a new line if not enough space is available 
+             */}
         </View>
+        
 
         
     )
@@ -52,7 +66,17 @@ const styles=StyleSheet.create({
         width:300,
         height:300,
         overflow:'hidden',
-
+    },
+    highlight:{
+        color:colors.primary,
+        fontFamily:'open-sans-bold',   
+    },
+    resultText:{
+        textAlign:'center'//a propriety spectific to <text>
+    },
+    resultContainer:{
+        marginHorizontal:20,
+        marginVertical:10,
     }
 });
 

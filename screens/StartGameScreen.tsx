@@ -14,6 +14,7 @@ import Input from "../components/input";
 import NumberContainer from "../components/numberContainer";
 import BodyText from "../components/BodyText";
 import TitleText from "../components/TitleText";
+import MainButton from "../components/MainButton";
 
 const StartGameScreen=(props:any)=>{
 
@@ -63,14 +64,17 @@ const StartGameScreen=(props:any)=>{
                 </NumberContainer>
             </View>
             <View>
-                <Button title="Let's play" onPress={()=>props.onStartGame(selectedNumber)} color={Colors.accent} />    
+                <MainButton onPress={()=>props.onStartGame(selectedNumber)} >
+                    START GAME
+                </MainButton>
             </View>
         </Card>
 
             
        
         
-    };//a change of state will cause a rerender of the whole page, which will trigger the function again
+    };//a change of state will cause a rerender of the whole page,
+    //  - which will trigger the function again
 
 
 
