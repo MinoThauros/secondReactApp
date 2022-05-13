@@ -17,6 +17,7 @@ const generateRandomBetween=(min:number, max:number, exclude:number):number=>{
 };
 
 const GameScreen=(props:any)=>{
+    //would love som structure on the incoming props which are fed to the template
     const [currentNumber, setCurrentNumber]=useState(generateRandomBetween(1,100, props.userChoice));
     const [Rounds, setRounds] = useState(0)
 
@@ -31,8 +32,8 @@ const GameScreen=(props:any)=>{
             onGameOver(Rounds);//only executed if currentNumber===userChoice
         }
     }, [currentNumber, userChoice, onGameOver]);
-    //function will only triggerif render cycle happened AND a change occured on one of the (AFTER render cycle)
-    //-variables in th dependency array
+    //function will only triggered if render cycle happened AND a change occured on one of the (AFTER render cycle)
+    //-variables in the dependency array
     
     
     
