@@ -50,7 +50,7 @@ const GameScreen=(props:any)=>{
                 text:'Sorry',
                 style:'cancel',
             }]);
-            return;
+            return;//alert is an object with a few special properties
         };
         if (direction==='lower'){
             currentHigh.current=currentNumber;//saved outside of component; wont trigger a re-render
@@ -74,7 +74,8 @@ const GameScreen=(props:any)=>{
                 </View>
             </Card>
         </View>
-        
+    //bind allows us to recreate the body of a function even outside of a context and pass variables to it
+    //equivalent to calling the function; 
     )
     };
 

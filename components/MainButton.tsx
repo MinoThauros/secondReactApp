@@ -11,7 +11,9 @@ const MainButton= (props:any)=>{
         </TouchableOpacity>
     )
 };
-
+//adds touchable behavior to any wrapped item
+//use props.children to be able to wrap around other components
+//use style={{...props.styles,...styles.propriety}} to deconstruct set of key:value pairs
 
 
 const styles=StyleSheet.create({
