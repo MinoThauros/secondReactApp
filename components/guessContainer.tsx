@@ -6,7 +6,8 @@ import Couleur from '../constants/colors';
 const GuessContainer=(props:any)=>{
     return(
         <View style={styles.container}>
-            <Text>Guess #{props.id} was {props.title}</Text>
+            <Text>#{props.id}</Text>
+            <Text>Opponent's guess was {props.title}</Text>
         </View>
     )
 };
@@ -17,7 +18,9 @@ const styles=StyleSheet.create({
         backgroundColor:colors.accent,
         padding:10,
         width:300,
-        margin:10
+        margin:10,
+        flexDirection:'row',
+        justifyContent:'space-between'
 
     }
 });
