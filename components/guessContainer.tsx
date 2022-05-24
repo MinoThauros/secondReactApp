@@ -19,7 +19,7 @@ const styles=StyleSheet.create({
         padding:10,
         width:300,
         margin:10,
-        flexDirection:'row',
+        flexDirection:'row',//to display components as rows
         justifyContent:'space-between'
 
     }
