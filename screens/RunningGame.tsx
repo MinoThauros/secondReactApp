@@ -4,8 +4,12 @@ import Colors from '../constants/colors';
 import NumberContainer from "../components/numberContainer";
 import Card from "../components/card";
 import defaultStyles from "../constants/default-styles";
+import {ListedItem} from "../interfaces/primitives"
 
 const generateRandomBetween=(min:number, max:number, exclude:number):number=>{
+    /**
+     * function to create a random number between min and max; recurcive implementation
+     */
     min=Math.ceil(min);
     max=Math.floor(max);
     const rndNum=Math.floor((Math.random() * (max-min))+min);
@@ -17,25 +21,38 @@ const generateRandomBetween=(min:number, max:number, exclude:number):number=>{
 };
 
 const GameScreen=(props:any)=>{
-    //would love som structure on the incoming props which are fed to the template
+    //would love some structure on the incoming props which are fed to the template
     const [currentNumber, setCurrentNumber]=useState(generateRandomBetween(1,100, props.userChoice));
     const [Rounds, setRounds] = useState(0)
 
+    //we need an array where all the past guesses are kept
+    const [pastGuesses,setPastGuesses]=useState([] as ListedItem[]);
+    const addNewGuess=()=>{
+        setPastGuesses((rounds:ListedItem[])=>{
+            const newElement=new ListedItem(currentNumber,currentNumber)
+            return [newElement,...rounds]});
+    };
+
+
+    //reseting values on every rerender
     const currentLow=useRef(1);
     const currentHigh=useRef(100);
 
     const {userChoice, onGameOver}=props;//object destructuring
 //had to destructure the props object because keeping them linked to props changes their value when the parent component changes
 //it will be marked as changed on rerendering of parent component
+//we create a new instance; specific to this context
     useEffect(()=>{
         if (currentNumber===props.userChoice){
             onGameOver(Rounds);//only executed if currentNumber===userChoice
-        }
+        };
+        
     }, [currentNumber, userChoice, onGameOver]);
     //function will only triggered if render cycle happened AND a change occured on one of the (AFTER render cycle)
     //-variables in the dependency array
     
-    
+    //the above function using useEffect is the function which polls if game should be ended
+    //conditionally triggered if something changes in the array
     
 
     const nextGuessHandler=(direction:string)=>{
@@ -61,6 +78,7 @@ const GameScreen=(props:any)=>{
         const nextNumber= generateRandomBetween(currentLow.current, currentHigh.current, currentNumber);
         setCurrentNumber(nextNumber);//passed as the next currentNumber; button rettigers the nextGuessHandler
         setRounds(curRounds=>curRounds+1);
+        addNewGuess();
     };
 
     return(
@@ -73,6 +91,9 @@ const GameScreen=(props:any)=>{
                     <Button title="Higher !!" onPress={()=>{nextGuessHandler('greater')}} />
                 </View>
             </Card>
+            {pastGuesses.map((guess)=>{return(
+                    <Text key={guess.id} >{guess.value}</Text>
+                )})}
         </View>
     //bind allows us to recreate the body of a function even outside of a context and pass variables to it
     //equivalent to calling the function; 
@@ -99,3 +120,5 @@ const styles=StyleSheet.create({
     },
 });
 export default GameScreen;
+
+//implement functionality where we offer a recap, showing all the wrong guesses as well

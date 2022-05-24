@@ -24,7 +24,7 @@ export default function App() {
     return <AppLoading startAsync={fetchFonts} onFinish={()=>setDataLoaded(true)} onError={(err)=>console.log(err)}/>};
     //startAsync contains the function we want to start when the component is rendered; fetchFonts is expected to be a function that returns a promise
     //See API docs for more info
-
+    //pass function as prop to startAsync; the componet will send a signal when load is done
   const gameOverHandler=(numberOfRounds:number)=>{
     setGuessRounds(numberOfRounds);
   };
@@ -51,6 +51,7 @@ export default function App() {
     content=<GameScreen userChoice={userNumber} onGameOver={gameOverHandler}/>
   }else if (GuessRounds >0){
     content=<GameOverScreen onRestart={configureNewGameHandler} userNumber={userNumber} roundsNumber={GuessRounds}/>;
+    //try to rewrite function using declaratinve inputs for the function (object structure vs dynamically typed prop)
   }
   return (
     <LinearGradient style={styles.screen} colors={['#4e0329','#ddb52f']}>
