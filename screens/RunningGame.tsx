@@ -5,7 +5,7 @@ import NumberContainer from "../components/numberContainer";
 import Card from "../components/card";
 import defaultStyles from "../constants/default-styles";
 import {ListedItem} from "../interfaces/primitives"
-
+import GuessContainer from "../components/guessContainer";
 const generateRandomBetween=(min:number, max:number, exclude:number):number=>{
     /**
      * function to create a random number between min and max; recurcive implementation
@@ -20,19 +20,33 @@ const generateRandomBetween=(min:number, max:number, exclude:number):number=>{
     }
 };
 
+
+
 const GameScreen=(props:any)=>{
     //would love some structure on the incoming props which are fed to the template
     const [currentNumber, setCurrentNumber]=useState(generateRandomBetween(1,100, props.userChoice));
-    const [Rounds, setRounds] = useState(0)
+    const [Rounds, setRounds] = useState(0);
+    const [key,SetKey]=useState(1);
+
+    const addGoal=()=>{
+        SetKey(key+1);
+      };
+
+    const getCurrentKey=()=>{
+        const currentKey=key;
+        return currentKey;
+
+    };
 
     //we need an array where all the past guesses are kept
     const [pastGuesses,setPastGuesses]=useState([] as ListedItem[]);
     const addNewGuess=()=>{
         setPastGuesses((rounds:ListedItem[])=>{
-            const newElement=new ListedItem(currentNumber,currentNumber)
-            return [newElement,...rounds]});
+            const newElement=new ListedItem(getCurrentKey(),currentNumber)
+            return [...rounds,newElement]});
     };
 
+    
 
     //reseting values on every rerender
     const currentLow=useRef(1);
@@ -79,7 +93,11 @@ const GameScreen=(props:any)=>{
         setCurrentNumber(nextNumber);//passed as the next currentNumber; button rettigers the nextGuessHandler
         setRounds(curRounds=>curRounds+1);
         addNewGuess();
+        console.log(key)
+        
     };
+
+
 
     return(
         <View style={styles.screen} >
@@ -87,12 +105,18 @@ const GameScreen=(props:any)=>{
             <NumberContainer>{currentNumber}</NumberContainer>
             <Card>
                 <View style={styles.buttonStack}>
-                    <Button title="Lower !!" onPress={nextGuessHandler.bind(this,'lower')} />
-                    <Button title="Higher !!" onPress={()=>{nextGuessHandler('greater')}} />
+                    <Button title="Lower !!" onPress={()=>{
+                        nextGuessHandler('lower');
+                        addGoal()
+                        }} />
+                    <Button title="Higher !!" onPress={()=>{
+                        nextGuessHandler('greater');
+                        addGoal()
+                        }} />
                 </View>
             </Card>
             {pastGuesses.map((guess)=>{return(
-                    <Text key={guess.id} >{guess.value}</Text>
+                    <GuessContainer key={guess.id} id={guess.id} title={guess.value}/>
                 )})}
         </View>
     //bind allows us to recreate the body of a function even outside of a context and pass variables to it
