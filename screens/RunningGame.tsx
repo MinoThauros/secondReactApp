@@ -4,8 +4,10 @@ import Colors from '../constants/colors';
 import NumberContainer from "../components/numberContainer";
 import Card from "../components/card";
 import defaultStyles from "../constants/default-styles";
-import {ListedItem} from "../interfaces/primitives"
+import {ListedItem, ListedItemProps} from "../interfaces/primitives"
 import GuessContainer from "../components/guessContainer";
+import { GameScreenProps } from "../interfaces/primitives";
+
 const generateRandomBetween=(min:number, max:number, exclude:number):number=>{
     /**
      * function to create a random number between min and max; recurcive implementation
@@ -22,9 +24,9 @@ const generateRandomBetween=(min:number, max:number, exclude:number):number=>{
 
 
 
-const GameScreen=(props:any)=>{
+const GameScreen=({onGameOver,userChoice}:GameScreenProps)=>{
     //would love some structure on the incoming props which are fed to the template
-    const [currentNumber, setCurrentNumber]=useState(generateRandomBetween(1,100, props.userChoice));
+    const [currentNumber, setCurrentNumber]=useState(generateRandomBetween(1,100, userChoice));
     const [Rounds, setRounds] = useState(0);
     const [key,SetKey]=useState(1);
 
@@ -43,7 +45,8 @@ const GameScreen=(props:any)=>{
     const addNewGuess=()=>{
         setPastGuesses((rounds:ListedItem[])=>{
             const newElement=new ListedItem(getCurrentKey(),currentNumber)
-            return [...rounds,newElement]});
+            return [...rounds,newElement]
+        });
     };
 
     
@@ -52,12 +55,12 @@ const GameScreen=(props:any)=>{
     const currentLow=useRef(1);
     const currentHigh=useRef(100);
 
-    const {userChoice, onGameOver}=props;//object destructuring
+    //const {userChoice, onGameOver}=props;//object destructuring
 //had to destructure the props object because keeping them linked to props changes their value when the parent component changes
 //it will be marked as changed on rerendering of parent component
 //we create a new instance; specific to this context
     useEffect(()=>{
-        if (currentNumber===props.userChoice){
+        if (currentNumber===userChoice){
             onGameOver(Rounds);//only executed if currentNumber===userChoice
         };
         
@@ -73,7 +76,7 @@ const GameScreen=(props:any)=>{
         //validate hint given by user before applying it; compare entered value to generated value
         //if entered value is effectively in the direction of the computer's val, then let direction be the variable applied to tests
         //entered val is props.userChoice; computer guess is currentNumber
-        if ((direction==='lower' && currentNumber < props.userChoice)||(direction==='greater' && currentNumber > props.userChoice)){
+        if ((direction==='lower' && currentNumber < userChoice)||(direction==='greater' && currentNumber > userChoice)){
             //DIRECTLY ennunciate undesirable scenarios
             Alert.alert('Don\'t lie',
             'You know that this is wrong...',
@@ -93,7 +96,7 @@ const GameScreen=(props:any)=>{
         setCurrentNumber(nextNumber);//passed as the next currentNumber; button rettigers the nextGuessHandler
         setRounds(curRounds=>curRounds+1);
         addNewGuess();
-        console.log(key)
+        //console.log(key)
         
     };
 
